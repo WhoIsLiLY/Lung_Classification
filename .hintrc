@@ -16,6 +16,12 @@
           "meta[name=theme-color]"
         ]
       }
+    ],
+    "axe/forms": [
+      "default",
+      {
+        "select-name": "off"
+      }
     ]
   }
 }
