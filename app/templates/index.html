@@ -32,7 +32,7 @@
         <section class="info-section ml-4 mr-4 mb-4">
             <h3>How It Works</h3>
             <p>
-                Our system uses a deep learning model trained on thousands of lung X-ray images to classify the lung status. 
+                Our system uses a machine learning model trained on hundreds of lung X-ray images to classify the lung status. 
                 Once you upload an image, it will be analyzed and classified as either normal or indicative of a medical condition.
             </p>
         </section>
@@ -53,10 +53,27 @@
 {% include "footer.html" %}
 
 <!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
+    function alertImage(){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "warning",
+            title: "Please Input an Image First!"
+          });
+    }
     document.getElementById('fileInput').addEventListener('change', function() {
         var fileName = this.files[0].name;
         var nextSibling = this.nextElementSibling;
@@ -66,43 +83,39 @@
     document.getElementById('classifyButton').addEventListener('click', function() {
         var fileInput = document.getElementById('fileInput');
         if (fileInput.files.length === 0) {
-            alert('Please select a file first.');
+            alertImage();
             return;
         }
 
         var formData = new FormData();
-        formData.append('file', fileInput.files[0]);
-
+        formData.append('image', fileInput.files[0]);
+        
         // Show overlay and iframe container
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('iframeContainer').style.display = 'block';
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/classify', true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
+        $.ajax({
+            url: '/classify',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data){
                 // Hide overlay and iframe container upon success
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('iframeContainer').style.display = 'none';
-
-                var result = JSON.parse(xhr.responseText);
-
-                // Redirect to another page upon success
-                window.location.href = '/output';  // Replace '/success' with your actual success page URL
-            } else {
+                //alert(JSON.stringify(data));
+                // Redirect to the output page with result data
+                window.location.href = '/output?result=' + encodeURIComponent(JSON.stringify(data));
+            },
+            error: function(xhr, status, error){
                 // Hide overlay and iframe container upon error
                 document.getElementById('overlay').style.display = 'none';
                 document.getElementById('iframeContainer').style.display = 'none';
+                console.error("AJAX Error:", status, error, xhr.responseText); // Log the error to the console
                 alert('Error occurred while classifying the file.');
             }
-        };
-        xhr.onerror = function () {
-            // Hide overlay and iframe container upon error
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('iframeContainer').style.display = 'none';
-            alert('Error occurred while classifying the file.');
-        };
-        xhr.send(formData);
+        });
     });
 </script>
 {% endblock %}

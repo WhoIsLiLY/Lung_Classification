@@ -7,154 +7,74 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Classification Result</h1>
-            <p>The classification result of this lung image detected 90% COVID.</p>
+            <p class="mb-0">The classification result of this lung image detected {{result.model_accuracy}}% {{result.lung_type}}.</p>
             <!--button class="btn btn-primary">View Badges</button-->
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-md-6">
             <div class="row-mt-8 mt-4">
                 <div class="card border border-2 border-success shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">Diagnosed Result : <b>{{result.lung_type}}</b></h5>
-                        <p>Method : {{result.process_method}}</p>
+                        <p>Classification Method : {{result.process_method}}</p>
                         <p class="card-text"></p>
                         {% if result.model_accuracy < 50 %}
-                        <p>Accuracy: </p>
-                        <p class="text-failed">{{result.model_accuracy}}%</p>
+                        <a>Accuracy: </a>
+                        <a style="color:red;">{{result.model_accuracy}}%</a>
                         {% else %}
                         <a>Accuracy: </a>
                         <a class="text-success">{{result.model_accuracy}}%</a>
                         {% endif %}
                     </div>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card border border-2 border-success shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Training Accuracy Using {{result.process_method}}</h5>
-                            <p class="card-text"></p>
-                            {% if result.model_accuracy < 50 %}
-                            <p>Accuracy: </p>
-                            <p class="text-failed">{{result.model_accuracy}}%</p>
-                            {% else %}
-                            <a>Accuracy: </a>
-                            <a class="text-success">{{result.model_accuracy}}%</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card border border-2 border-success shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Transactions</h5>
-                            <p class="card-text">$14,857</p>
-                            <p class="text-success">+28.14%</p>
-                        </div>
-                    </div>
-                </div> 
             </div>
         </div>
         <div class="col-md-6">
             <div class="row-mt-8 mt-4">
                 <div class="card border border-2 border-success shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">Pre-Processing Methods : <b>{{result.lung_type}}</b></h5>
-                        <p>Method : {{result.process_method}}</p>
-                        <p class="card-text"></p>
-                        {% if result.model_accuracy < 50 %}
-                        <p>Accuracy: </p>
-                        <p class="text-failed">{{result.model_accuracy}}%</p>
-                        {% else %}
-                        <a>Accuracy: </a>
-                        <a class="text-success">{{result.model_accuracy}}%</a>
-                        {% endif %}
+                        <h5 class="card-title" style="margin-bottom:0;">Pre-Processing Methods : <b>{{result.preprocess_method}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card border border-2 border-success shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Payments</h5>
-                            <p class="card-text">$2,456</p>
-                            <p class="text-danger">-14.82%</p>
-                        </div>
+            <div class="row-mt-8 mt-2">
+                <div class="card border border-2 border-success shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title" style="margin-bottom:0;">Cross-Validation Methods : <b>{{result.cross_validation_method}}</b></h5>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card border border-2 border-success shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Transactions</h5>
-                            <p class="card-text">$14,857</p>
-                            <p class="text-success">+28.14%</p>
-                        </div>
-                    </div>
-                </div> 
             </div>
         </div>
     </div>
-    
-    <div class="row mt-4">
-        <div class="col-md-8">
-            <div class="card border border-2 border-success shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Graph ...</h5>
-                    <canvas id="revenueChart"></canvas>
+    <div class="card border border-2 border-success shadow-sm">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row-mt-8 mt-2">
+                        <div class="card border border-2 border-success shadow-sm">
+                            <div class="card-body">
+                                <h3><b>BEFORE PREPROCESS</b></h3>
+                                <img src="{{ url_for('serve_predict_image', filename=result.image_before) }}" alt="Image Before Preprocess" class="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row-mt-8 mt-2">
+                        <div class="card border border-2 border-success shadow-sm">
+                            <div class="card-body">
+                                <h3><b>AFTER PREPROCESS</b></h3>
+                                <img src="{{ url_for('serve_preprocessed_image', filename=result.image_after) }}" alt="Image After Preprocess" class="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card border border-2 border-success shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Evaluation</h5>
-                    <p>78% using K-Fold</p>
-                    <p>62% Company Growth</p>
-                    <p>2022: $32.5k</p>
-                    <p>2021: $41.2k</p>
-                </div>
-            </div>
-            <!--div class="card mt-3">
-                <div class="card-body">
-                    <h5 class="card-title">Profile Report</h5>
-                    <p>Year 2021</p>
-                    <p>68.2%: $84,686k</p>
-                </div>
-            </div-->
         </div>
     </div>
 </div>
 {% include "footer.html" %}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('revenueChart').getContext('2d');
-    var revenueChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: '2021',
-                data: [10, 20, 30, 40, 50, 60, 70],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }, {
-                label: '2020',
-                data: [-10, -20, -30, -40, -50, -60, -70],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
 {% endblock %}
