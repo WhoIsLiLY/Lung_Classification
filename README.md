@@ -40,11 +40,12 @@ To run this project locally, follow these steps:
 - Numpy
 - OpenCV
 - Scikit-learn
+- Xgboost
 
 ### Installation
 1. Clone this repository:
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/WhoIsLiLY/Lung_Classification.git)
    cd lung-classification
    ```
 ## Create a virtual environment and activate it:
