@@ -76,7 +76,7 @@ The application’s model achieves:
 These metrics demonstrate the robustness of the model and its effectiveness in classifying lung conditions based on X-ray images.
 
 ## Journal Reference
-For a detailed explanation of the methodology, model training, and evaluation metrics, please refer to the attached journal paper [https://drive.google.com/drive/folders/1oJAwGifq8GWF10dVG0fq0dRhqkLDZOtF].
+For a detailed explanation of the methodology, model training, and evaluation metrics, please refer to the attached journal paper [https://drive.google.com/file/d/1Gez3MvSHIJMlSHwgwBiU-CS-Gp3F--U3/view?usp=sharing].
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
