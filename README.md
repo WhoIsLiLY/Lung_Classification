@@ -45,7 +45,7 @@ To run this project locally, follow these steps:
 ### Installation
 1. Clone this repository:
    ```bash
-   git clone [<repository-url>](https://github.com/WhoIsLiLY/Lung_Classification.git)
+   git clone https://github.com/WhoIsLiLY/Lung_Classification.git
    cd lung-classification
    ```
 ## Create a virtual environment and activate it:
