@@ -58,7 +58,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 ## Run the Flask application:
 ```bash
-python app.py
+python run.py
 ```
 
 ## USAGE
